@@ -4,26 +4,15 @@ import java.util.Scanner;
 
 public class Encrypter {
 
-    String operation;
-    String message;
-    int shift;
     String encrypted;
 
-    Encrypter() {
-        getInputs();
-        if (operation.equals("enc")) {
-            encrypt(message, shift);
-        } else if (operation.equals("dec")) {
-            encrypt(message, -shift);
+    Encrypter(Inputs inputs) {
+        if (inputs.getMode().equals("enc")) {
+            encrypt(inputs.getData(), inputs.getKey());
+        } else if (inputs.getMode().equals("dec")) {
+            encrypt(inputs.getData(), -inputs.getKey());
         }
         System.out.println(encrypted);
-    }
-
-    private void getInputs() {
-        Scanner in = new Scanner(System.in);
-        operation = in.nextLine();
-        message = in.nextLine();
-        shift = in.nextInt();
     }
 
     private void encrypt(String message, int shift) {
