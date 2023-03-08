@@ -4,34 +4,37 @@ import java.util.Scanner;
 
 public class Encrypter {
 
-    Scanner in = new Scanner(System.in);
+    String operation;
+    String message;
+    int shift;
+    String encrypted;
 
     Encrypter() {
-        String message = in.nextLine();
-        int shift = in.nextInt();
-        String encrypted = encrypt(message, shift);
+        getInputs();
+        if (operation.equals("enc")) {
+            encrypt(message, shift);
+        } else if (operation.equals("dec")) {
+            encrypt(message, -shift);
+        }
         System.out.println(encrypted);
     }
 
-    private String encrypt(String message, int shift) {
-        String encrypted = "";
+    private void getInputs() {
+        Scanner in = new Scanner(System.in);
+        operation = in.nextLine();
+        message = in.nextLine();
+        shift = in.nextInt();
+    }
+
+    private void encrypt(String message, int shift) {
+        encrypted = "";
         for (int i = 0; i < message.length(); i++) {
             encrypted = encrypted + transformLetter(message.charAt(i), shift);
         }
-        return encrypted;
     }
 
     private char transformLetter(char letter, int shift) {
-        char result;
-        if (letter >= 'a' && letter <= 'z') {
-            result = (char)(letter + shift);
-            if (result > 'z') {
-                result = (char)(result - 26);
-            }
-        } else {
-            result = letter;
-        }
-        return result;
+        return (char)(letter + shift);
     }
 
 }
