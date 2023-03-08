@@ -1,23 +1,35 @@
 package encryptdecrypt;
 
+import java.util.Scanner;
+
 public class Encrypter {
 
+    Scanner in = new Scanner(System.in);
+
     Encrypter() {
-        System.out.println(encrypt("we found a treasure!"));
+        String message = in.nextLine();
+        int shift = in.nextInt();
+        String encrypted = encrypt(message, shift);
+        System.out.println(encrypted);
     }
 
-    private String encrypt(String message) {
+    private String encrypt(String message, int shift) {
         String encrypted = "";
         for (int i = 0; i < message.length(); i++) {
-            encrypted = encrypted + transformLetter(message.charAt(i));
+            encrypted = encrypted + transformLetter(message.charAt(i), shift);
         }
         return encrypted;
     }
 
-    private char transformLetter(char letter) {
-        char result = letter;
-        if (letter >= 'a' && letter <= 'z'){
-            result = (char)('z' + 'a' - letter);
+    private char transformLetter(char letter, int shift) {
+        char result;
+        if (letter >= 'a' && letter <= 'z') {
+            result = (char)(letter + shift);
+            if (result > 'z') {
+                result = (char)(result - 26);
+            }
+        } else {
+            result = letter;
         }
         return result;
     }
