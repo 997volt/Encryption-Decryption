@@ -12,7 +12,11 @@ public class Encrypter {
         } else if (inputs.getMode().equals("dec")) {
             encrypt(inputs.getData(), -inputs.getKey());
         }
-        System.out.println(encrypted);
+        if (inputs.getOut().equals("")) {
+            System.out.println(encrypted);
+        } else {
+            FileHandler.writeToFile(inputs.getOut(), encrypted);
+        }
     }
 
     private void encrypt(String message, int shift) {
