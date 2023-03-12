@@ -7,27 +7,36 @@ public class Encrypter {
     String encrypted;
 
     Encrypter(Inputs inputs) {
-        if (inputs.getMode().equals("enc")) {
-            encrypt(inputs.getData(), inputs.getKey());
-        } else if (inputs.getMode().equals("dec")) {
-            encrypt(inputs.getData(), -inputs.getKey());
+        boolean direction = inputs.getMode().equals("enc");
+        boolean unicodeAlg = inputs.getAlg().equals("unicode");
+        encrypt(inputs.getData(), inputs.getKey(), direction, unicodeAlg);
+        presentResult(inputs.getOut());
+    }
+
+    private void encrypt(String message, int shift, boolean direction, boolean unicodeAlg) {
+        encrypted = "";
+        if (!direction) {
+            shift = -shift;
         }
-        if (inputs.getOut().equals("")) {
+        for (int i = 0; i < message.length(); i++) {
+            encrypted = encrypted + transformLetter(message.charAt(i), shift, unicodeAlg);
+        }
+    }
+
+    private char transformLetter(char letter, int shift, boolean unicodeAlg) {
+        char encrypted = letter;
+        if (unicodeAlg) {
+            encrypted = (char)(letter + shift);
+        }
+        return encrypted;
+    }
+
+    private void presentResult(String outFile) {
+        if (outFile.equals("")) {
             System.out.println(encrypted);
         } else {
-            FileHandler.writeToFile(inputs.getOut(), encrypted);
+            FileHandler.writeToFile(outFile, encrypted);
         }
-    }
-
-    private void encrypt(String message, int shift) {
-        encrypted = "";
-        for (int i = 0; i < message.length(); i++) {
-            encrypted = encrypted + transformLetter(message.charAt(i), shift);
-        }
-    }
-
-    private char transformLetter(char letter, int shift) {
-        return (char)(letter + shift);
     }
 
 }

@@ -7,6 +7,7 @@ public class Inputs {
     String data = "";
     String in = "";
     String out = "";
+    String alg = "";
 
     Inputs(String[] args) {
         for (int i = 0; i < args.length; i+=2) {
@@ -20,6 +21,8 @@ public class Inputs {
             in = args[i+1];
         } else if (args[i].equals("-out")) {
             out = args[i+1];
+        } else if (args[i].equals("-alg")) {
+            alg = args[i+1];
         }
     }
 }
@@ -44,5 +47,9 @@ public class Inputs {
 
     public String getOut() {
         return out;
+    }
+
+    public String getAlg() {
+        return alg;
     }
 }
